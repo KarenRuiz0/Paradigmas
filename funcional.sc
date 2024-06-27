@@ -49,3 +49,9 @@ object MyApp extends App {
   val result = apariciones("pedro pedro pedro pedro pe la la la la pe pe h h h h ka ka ka ka", 4)
   println(s"$result")
 }
+
+////////////////////////////
+//EJERCICIO con Match
+/*Escribir una función en Scala def fjuegos(numeros: List[String]): List[String] que retorne la lista original pero reemplazando los números "1" por "algo", los "4" por "ritmos" y los "10" por "elUltimo". Los "7" deben eliminarse por ser de mala suerte,
+ Eiemplo: Juegos(["1", "4", "1" "5", "7", "10", "2"]) => ["algo", "ritmos", "algo", "5", "elUltimo", "2"]
+*/
