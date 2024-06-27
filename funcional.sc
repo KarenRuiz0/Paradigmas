@@ -24,7 +24,11 @@ def forEach(lista: List[Int], funcion: Int => Unit): Unit = {
 }
 
 /* GROUPBY */
-
+// GroupBy es una función de órden superior que agrupa
+// los elementos de la lista según el resultado de la función
+// especificada como clave, devolviendo un mapa donde las claves son los
+// resultados de la función y los valores son listas de elementos que
+// tienen la misma clave.
 def apariciones(frase: String, n: Int): Int = {
   frase
     .toLowerCase()
