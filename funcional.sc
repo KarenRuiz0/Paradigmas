@@ -39,19 +39,25 @@ def apariciones(frase: String, n: Int): Int = {
     .size
 }
 
+def fjuegos(numeros: List[String]): List[String] = numeros match {
+  case Nil => numeros
+  case x::xs if ( x == "1" ) => "algo"::fjuegos(xs)
+  case x::xs if ( x == "4" ) => "ritmos"::fjuegos(xs)
+  case x::xs if ( x == "10" ) => "elUltimo"::fjuegos(xs)
+  case x::xs if ( x == "7" ) => fjuegos(xs)
+  case x::xs => x::fjuegos(xs)
+}
+
 object MyApp extends App {
   //val list = List(1, 2, 3, 4, 5, 22, 30, 40)
-  val list = List("argentina", "peru", "chile","cuba","china","Irán")
+  //val list = List("argentina", "peru", "chile","cuba","china","Irán")
+  //val list = List("1", "4", "1", "5", "7", "10", "2")
+  
   
   //val result = iterarLista(list)
   //val result = mayorQue(list, 5)
   //val result = forEach(list, elemento => println(elemento))
-  val result = apariciones("pedro pedro pedro pedro pe la la la la pe pe h h h h ka ka ka ka", 4)
-  println(s"$result")
+  //val result = apariciones("pedro pedro pedro pedro pe la la la la pe pe h h h h ka ka ka ka q q q q", 4)
+  //val result = fjuegos(list)
+  //println(s"$result")
 }
-
-////////////////////////////
-//EJERCICIO con Match
-/*Escribir una función en Scala def fjuegos(numeros: List[String]): List[String] que retorne la lista original pero reemplazando los números "1" por "algo", los "4" por "ritmos" y los "10" por "elUltimo". Los "7" deben eliminarse por ser de mala suerte,
- Eiemplo: Juegos(["1", "4", "1" "5", "7", "10", "2"]) => ["algo", "ritmos", "algo", "5", "elUltimo", "2"]
-*/
