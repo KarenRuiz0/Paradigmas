@@ -1,0 +1,314 @@
+// Ej. 1 :
+/*
+*   Escribir una función entreNumeros(inicio: Int, fin: Int): List[Int] que
+*   retorne una lista que incluya todos los n´umeros enteros entre inicio y
+*   fin incluyéndolos.
+*/
+
+def entreNumeros(inicio: Int, fin: Int): List[Int] = {
+  (inicio to fin).toList;
+}
+
+val listaEntreNumeros = entreNumeros(0, 5);
+println("Elementos entre ambos números: " + listaEntreNumeros.mkString(", "))
+
+// Ej. 2 :
+/*
+*   Escribir una función repetidos(lista1: List[Int], lista2: List[Int]): List[Int]
+*   que retorne una nueva lista que contenga los elementos que están pre-
+*   sentes en ambas listas.
+*/
+
+def repetidos(lista1: List[Int], lista2: List[Int]): List[Int] = {
+  lista1.filter(lista2.contains);
+}
+
+val lista1 = List(0,1,2,3,4,5,10);
+val lista2 = List(0,1,6,7,8,9,10);
+val resultado = repetidos(lista1, lista2)
+println("Elementos repetidos en ambas listas: " + resultado.mkString(", "))
+
+// Ej. 3 :
+/*
+*   Escribir una función eliminarRepetidos(lista: List[Int]): List[Int] que
+*   retorne una nueva lista que contenga los mismos elementos que la ori-
+*   ginal pero sin elementos repetidos.
+*/
+
+def eliminarRepetidos(lista: List[Int]): List[Int] = {
+  lista.distinct;
+}
+
+val listaSinRepetidos = eliminarRepetidos(List(0,1,1,2,1,2,3,3));
+println("Lista de elementos sin repetir: " + listaSinRepetidos.mkString(", "))
+
+// Ej. 4 :
+/*
+*   Escribir una función aplicar(lista: List[Int], f: (Int, Int) = Int): List[Int]
+*   que retorne una nueva lista que contenga los resultados de aplicar f a
+*   cada elemento de lista.
+*/
+
+def funcionDePrueba(elemento: Int, numemroASumar: Int): Int = {
+  elemento+numemroASumar;
+}
+
+def aplicar(lista: List[Int], f: (Int, Int) => Int): List[Int] = {
+  1
+  lista.map(elemento => f(elemento, 3))
+}
+val nuevaLista = aplicar(List(0,1,1,2,1,2,3,3), funcionDePrueba);
+println("Nueva lista generada: " + nuevaLista.mkString(", "))
+
+// Ej. 5 :
+/*
+*   Escribir una función sumar(lista: List[Int]): Int que retorne la suma de
+*   todos los elementos de la lista.
+*/
+
+//Resuelto con la recursividad de Tail (QUEUE)
+def sumar(lista: List[Int], acum: Int = 0): Int = lista match {
+  case Nil => acum
+  case n::ns => sumar(ns, acum + n)
+}
+
+// Ej. 6 :
+
+/*
+*   Definir si las funciones son puras y en caso de no ser, explicar por qué
+*/
+
+/*  Caso 1 :
+
+    def f ( x : Int , y : Int ) : Int = {
+       x + y
+    }
+
+    Conclusión: Es una función pura ya que no accede a variables fuera del scope, es determinística (es decir,
+    que siempre que se llame a la función y sean los mismos parametros, esta dará lo mismo), y no modifica ningún
+    valor que pueda producir un side effect (efecto secundario, es decir cuando una función modifica un valor que
+    se utiliza en alguna otra parte del programa).
+*/
+
+/*  Caso 2:
+
+    def fecha () : String = {
+      LocalDate.now.format( DateTimeFormatter.ofPattern ("yyyyMMdd"))
+    }
+    Conclusión: No es una función pura, ya que una función pura es determinística, y al depender de la fecha correspon
+    -diente al día que se ejecuta, esta cambia, significa que no siempre va a ser el mimso resultado.
+*/
+
+/*  Caso 3  *** DUDAAAAA *** PREGUNTAR !
+
+def contar ( l : List [ Int ] , e : Int ) : Int = {
+   var cont = 0;
+   l.foreach ( elemento => {
+     if ( elemento == e ) {
+       cont = cont + 1
+       }
+     })
+   cont
+}
+   Conclusión: No es pura, ya que Las funciones puras no deben depender de variables (en esta caso cont) o datos que no
+   se les pasen como argumentos. Deben ser autosuficientes y no depender de estados o variables globales.
+
+*/
+
+/*  CASO 4:
+
+import scala.collection.mutable.Map
+
+def actualizarAUno ( mapa : Map [ Int , Int ]) = {
+   for (k , v ) <- mapa do
+     mapa ( k ) = 1
+}
+  Conclusión: No es pura, ya que se está modificando un argumento, lo que implica un side effect.
+
+*/
+
+/*  CASO 5:
+ import scala.collection.mutable.Map
+
+def randomEntre ( a : Int , b : Int ) : Int = {
+   val rand = new scala . util . Random
+   rand . between (a , b )
+}
+
+  Conclusión: No es una función pura, ya que una función pura es determinística, y al depender del valor random que
+  varía en cada llamada, este valor va a cambiar, es decir, no siempre va a ser el mimso resultado.
+
+*/
+
+/*  CASO 6:
+   def merge [ A ]( list1 : List [ A ] , list2 : List [ A ]) : List [ A ] = {
+     list1 ::: list2
+   }
+
+   Conclusión: Es una función pura ya que no accede a variables fuera del scope, es determinística (es decir,
+   que siempre que se llame a la función y sean los mismos parametros, esta dará lo mismo), y no modifica ningún
+   valor que pueda producir un side effect (efecto secundario, es decir cuando una función modifica un valor que
+   se utiliza en alguna otra parte del programa).
+*/
+/*  CASO 7:
+import java.io.PrintWriter
+
+def guardarEnArchivo ( texto : String , ruta : String ) : Unit = {
+    val escritor = new PrintWriter ( ruta )
+    try {
+      escritor . write ( texto )
+    } finally {
+      writer.close ()
+    }
+}
+  Conclusión: No es una función pura, ya que implica side effect al modificar un archivo.
+*/
+
+/*
+*Ejercicios complejos: (no estan ordenados por dificultad necesariamente)
+*/
+
+/*
+1. Escribir una funcion contar(palabras: List[String]): Map[String, Int]
+que retorne un mapa donde las claves sean las palabras de la lista pa-
+  sada por parametro y los valores la cantidad de apariciones que tiene
+  dicha palabra en la lista
+*/
+
+def contarPalabra(palabra: String, mapa: Map[String, Int]): Map[String, Int] = {
+  mapa + (palabra -> (mapa.getOrElse(palabra, 0) + 1))
+}
+
+def contarPalabras(palabras: List[String], mapa: Map[String, Int]): Map[String, Int] = {
+  palabras match {
+    case Nil => mapa // Caso base: lista vacía, devuelve el mapa actualizado
+    case palabra :: resto =>
+      // Llama a contarPalabra para incrementar el contador de la palabra actual
+      val nuevoMapa = contarPalabra(palabra, mapa)
+      // Llama recursivamente con el resto de la lista y el mapa actualizado
+      contarPalabras(resto, nuevoMapa)
+  }
+}
+
+def contar(palabras: List[String]): Map[String, Int] = {
+  // Llama a la función auxiliar contarPalabras con la lista de palabras y un mapa vacío
+  contarPalabras(palabras, Map.empty[String, Int])
+}
+// Ejemplo de uso
+val palabras = List("hola", "mundo", "hola", "scala", "mundo", "hola")
+val resultado = contar(palabras)
+println(resultado)  // Imprime: Map(hola -> 3, mundo -> 2, scala -> 1)
+
+
+/*
+  Escribir una función topK(números: List[Int], k: Int, f: (Int, Int) =>Int):
+    List[Int] que retorne una lista con los k elementos de números mas
+    grandes según la función f. La respuesta debe estar ordenada segun el
+  criterio de la función f.
+*/
+
+def topK(numeros: List[Int], k: Int, f: (Int, Int) => Int): List[Int] = {
+  // Ordena la lista de números en orden descendente según el criterio de la función f
+  val numerosOrdenados = numeros.sortWith((a, b) => f(a, b) > 0)
+
+  // Utiliza reduce para tomar los primeros k elementos de la lista ordenada
+  val kElementosMasGrandes = numerosOrdenados.take(k)
+
+  // Devuelve la lista de los k elementos más grandes
+  kElementosMasGrandes
+}
+
+// Ejemplo de uso
+val numeros = List(3, 1, 4, 2, 5)
+val k = 3
+
+// Función que devuelve el número mismo (para este ejemplo)
+val funcion = (a: Int, b: Int) => a - b
+
+// Llamada a la función topK
+val resultado = topK(numeros, k, funcion)
+println(resultado) // Debería imprimir: List(5, 4, 3)
+
+
+/*
+* Definir la función curry, que dada una función de dos argumentos,
+* devuelve su equivalente currificada.
+*/
+
+//val sumaCurry: Int => Int => Int = (a: Int) => (b: Int) => a + b --> Hardcodeada
+
+val suma = (n1: Int, n2: Int) => n1 + n2
+
+val sumaCurry = suma.curried;
+val sumaUno = sumaCurry(1) // Esto devuelve una función que suma 1 a su argumento
+val resultado = sumaUno(2) // Esto dará 3 (1 + 2)
+
+
+/*
+* Definir la función uncurry, que dada una función currificada de dos ar-
+gumentos, devuelve su versión no currificada equivalente. Es la inversa
+de la anterior
+* */
+
+def uncurry[A, B, C](f: A => B => C): (A, B) => C = {
+  (a: A, b: B) => f(a)(b)
+}
+
+val sumaUncurried: (Int, Int) => Int = uncurry(sumaCurry)
+
+val resultado = sumaUncurried(5, 2) // Esto dará 3 (1 + 2)
+
+/*
+* Generar la lista de los primeros mil numeros primos.
+*/
+
+  // Función para verificar si un número es primo
+  def isPrime(n: Int): Boolean =
+    n > 1 && (2 until n).forall(i => n % i != 0)
+
+    // n = 7
+
+    // i % 2
+    // i % 3
+    // i % 4
+    // i % 5
+    // i % 6
+
+  // Generar los primeros mil números primos utilizando recursión y funciones de orden superior
+  def generatePrimes(count: Int, current: Int, primes: List[Int]): List[Int] = {
+    if (count == 0) primes.reverse
+    else if (isPrime(current)) generatePrimes(count - 1, current + 1, current :: primes)
+    else generatePrimes(count, current + 1, primes)
+  }
+
+  // Obtener los primeros mil números primos
+  val primeNumbers: List[Int] = generatePrimes(1000,2,Nil)
+
+  // Imprimir los primeros mil números primos
+  println(primeNumbers)
+
+
+/*
+* Dado un texto, crear una funcion que tome el texto como entrada y
+* devuelva un mapa que muestre la frecuencia de cada palabra en el texto.
+* Los espacios no deben ser considerados
+*/
+
+def contarFrecuenciaPalabras(texto: String): Map[String, Int] = {
+  val palabras = texto.split("\\s+").filter(_.nonEmpty)
+  palabras.groupBy(identity).mapValues(_.length)
+
+
+
+
+
+
+
+
+}
+
+val textoPiola = "Texto PIOLA"
+val mapaFrecuencia = contarFrecuenciaPalabras(textoPiola)
+println(mapaFrecuencia) // Esto imprimirá el mapa con la frecuencia de palabras en el texto
+
+/***************************************************Modelo de parcial**************************************************/
